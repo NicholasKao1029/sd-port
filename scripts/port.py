@@ -184,7 +184,6 @@ def sync_pics():
             }
 
             content.append(payload)
-            break
 
         except Exception as e:
             print(e)
@@ -208,7 +207,7 @@ def sync_pics():
         '\n time taken: '+ str(end - start) 
     )
 
-    return fileOutName
+    return [fileOutName]
     
 
 def generic_sync(dir_path, file_ext, resource_name, get_hash_func):
@@ -258,12 +257,12 @@ def sync_hypernetworks():
 
 def sync_models():
     fileNames = []
-    fileNames.append(generic_sync(model_dir, '.ckpt', 'model', sd_models.model_hash))
-    fileNames.append(generic_sync(model_dir, '.safetensors', 'model', sd_models.model_hash))
+    fileNames.append(generic_sync(model_dir, '.ckpt', 'model-ckpt', sd_models.model_hash))
+    fileNames.append(generic_sync(model_dir, '.safetensors', 'model-safetensors', sd_models.model_hash))
     return fileNames
 
 def sync_embeddings():
     fileNames = []
-    fileNames.append(generic_sync(embedding_dir, '.pt', 'embedding', hash_file))
-    fileNames.append(generic_sync(embedding_dir, '.png', 'embedding', hash_file))
+    fileNames.append(generic_sync(embedding_dir, '.pt', 'embedding-pt', hash_file))
+    fileNames.append(generic_sync(embedding_dir, '.png', 'embedding-png', hash_file))
     return fileNames
