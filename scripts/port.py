@@ -193,7 +193,7 @@ def sync_pics():
                 break
         count += 1
 
-    fileOutName = 'pics.json'
+    fileOutName = 'gen-param.json'
     with open(fileOutName, 'w') as outfile:
         json_data = json.dumps(content)
         outfile.write(json_data)
@@ -216,6 +216,7 @@ def generic_sync(dir_path, file_ext, resource_name, get_hash_func):
     start = time.time()
 
     filelist = []
+    success_count = 0 
     for root, _, files in os.walk(dir_path):
         for file in files:
             #append the file name to the list
@@ -232,9 +233,9 @@ def generic_sync(dir_path, file_ext, resource_name, get_hash_func):
                     'hash': get_hash_func(path)
                 }
                 filelist.append(final)
+        success_count += 1
 
     total = len(filelist)
-    success_count = 0 
     fileOutName = f'{resource_name}.json'
     with open(fileOutName, 'w') as outfile:
         json_data = json.dumps(filelist)
